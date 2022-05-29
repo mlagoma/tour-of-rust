@@ -69,35 +69,44 @@ pub fn main() {
 //     // foo is dropped here
 // }
 
-    // Borrowing Mutable Ownership with References
-    let mut foo = Foo { x: 42 };
+//     // Borrowing Mutable Ownership with References
+//     let mut foo = Foo { x: 42 };
+//     let f = &mut foo;
+
+//     // FAILURE: remove_ownership(foo) would fail because
+//     // foo cannot be moved while mutably borrowed
+//     // remove_ownership(foo);
+//     // println!("{}", f.x);
+//     // println!("{}", foo.x);
+
+//     // FAILURE: foo.x = 13; would fail here because
+//     // foo is not modifiable while mutably borrowed
+//     // foo.x = 13;
+//     // println!("{}", foo.x);
+//     // println!("{}", f.x);
+
+//     f.x = 13;
+//     // f is dropped here because it's no longer used after this point
+//     println!("{}", f.x);
+
+//     println!("{}", foo.x);
+
+//     // this works now because all mutable references were dropped
+//     foo.x = 7;
+//     println!("{}", foo.x);
+//     // println!("{}", f.x);
+
+//     // move foo's ownership to a function
+//     remove_ownership(foo);
+//     // remove_mutable_ownership(foo);
+//     // println!("{}", foo.x);
+// }
+
+    // Dereferencing
+    let mut foo = 42;
     let f = &mut foo;
-
-    // FAILURE: remove_ownership(foo) would fail because
-    // foo cannot be moved while mutably borrowed
-    // remove_ownership(foo);
-    // println!("{}", f.x);
-    // println!("{}", foo.x);
-
-    // FAILURE: foo.x = 13; would fail here because
-    // foo is not modifiable while mutably borrowed
-    // foo.x = 13;
-    // println!("{}", foo.x);
-    // println!("{}", f.x);
-
-    f.x = 13;
-    // f is dropped here because it's no longer used after this point
-    println!("{}", f.x);
-
-    println!("{}", foo.x);
-
-    // this works now because all mutable references were dropped
-    foo.x = 7;
-    println!("{}", foo.x);
-    // println!("{}", f.x);
-
-    // move foo's ownership to a function
-    remove_ownership(foo);
-    // remove_mutable_ownership(foo);
-    // println!("{}", foo.x);
+    let bar = *f; // get a copy of the owner's value
+    *f = 13;      // set the reference's owner's value
+    println!("{}", bar);
+    println!("{}", foo);
 }
