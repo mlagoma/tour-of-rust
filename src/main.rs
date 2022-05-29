@@ -12,5 +12,6 @@ mod result;
 // }
 
 fn main() -> Result<(), String> {
+	// return result::main();
 	result::main()
 }
