@@ -11,12 +11,19 @@ fn remove_ownership(f: Foo) {
     // f is dropped here
 }
 
-
 fn remove_mutable_ownership(mut f: Foo) {
     //let y = f.x;
     println!("{}", f.x);
     f.x = 0;
     println!("{}", f.x);
+    // f is dropped here
+}
+
+fn remove_borrowed_ownership(f: &mut Foo) {
+    //let y = f.x;
+    println!("{} (remove_borrowed_ownership before modify)", f.x);
+    f.x += 1;
+    println!("{} (remove_borrowed_ownership after modify)", f.x);
     // f is dropped here
 }
 
@@ -102,11 +109,32 @@ pub fn main() {
 //     // println!("{}", foo.x);
 // }
 
-    // Dereferencing
-    let mut foo = 42;
+//     // Dereferencing
+//     let mut foo = 42;
+//     let f = &mut foo;
+//     let bar = *f; // get a copy of the owner's value
+//     *f = 13;      // set the reference's owner's value
+//     println!("{}", bar);
+//     println!("{}", foo);
+// }
+
+    // Passing Around Borrowed Data
+    let mut foo = Foo { x: 42 };
+    remove_borrowed_ownership(&mut foo);
+    // println!("{}", f.x);
+    // because all mutable references are dropped within
+    // the function remove_ownership, we can create another.
+    remove_borrowed_ownership(&mut foo);
+    println!("{} (mutable [foo] after remove ownership)", foo.x);
+
     let f = &mut foo;
-    let bar = *f; // get a copy of the owner's value
-    *f = 13;      // set the reference's owner's value
-    println!("{}", bar);
-    println!("{}", foo);
+    println!("{} (mutable reference [f] before remove ownership)", f.x);
+    remove_borrowed_ownership(f);
+    // remove_ownership(foo);
+    println!("{} (mutable reference [f] after remove ownership)", f.x);
+    remove_borrowed_ownership(f);
+    println!("{} (mutable [foo] after remove ownership)", foo.x);
+    let f = &mut foo;
+    println!("{}", f.x);
+    // foo is dropped here
 }
