@@ -5,6 +5,7 @@ mod option;
 mod basic_result;
 mod result;
 mod vectors;
+mod ownership;
 
 // fn main() {
 // 	// struct_enums::main();
@@ -16,6 +17,7 @@ mod vectors;
 fn main() -> Result<(), String> {
 	// return result::main();
 	// result::main()
-	vectors::main();
+	// vectors::main();
+	ownership::main();
 	Ok(())
 }
