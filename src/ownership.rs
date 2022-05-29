@@ -27,6 +27,10 @@ fn remove_borrowed_ownership(f: &mut Foo) {
     // f is dropped here
 }
 
+fn return_reference_ownership(a: &Foo) -> &i32 {
+    &a.x
+}
+
 fn return_ownership() -> Foo {
     Foo { x: 42 }
     // ownership is moved out
@@ -118,23 +122,34 @@ pub fn main() {
 //     println!("{}", foo);
 // }
 
-    // Passing Around Borrowed Data
-    let mut foo = Foo { x: 42 };
-    remove_borrowed_ownership(&mut foo);
-    // println!("{}", f.x);
-    // because all mutable references are dropped within
-    // the function remove_ownership, we can create another.
-    remove_borrowed_ownership(&mut foo);
-    println!("{} (mutable [foo] after remove ownership)", foo.x);
+//     // Passing Around Borrowed Data
+//     let mut foo = Foo { x: 42 };
+//     remove_borrowed_ownership(&mut foo);
+//     // println!("{}", f.x);
+//     // because all mutable references are dropped within
+//     // the function remove_ownership, we can create another.
+//     remove_borrowed_ownership(&mut foo);
+//     println!("{} (mutable [foo] after remove ownership)", foo.x);
 
-    let f = &mut foo;
-    println!("{} (mutable reference [f] before remove ownership)", f.x);
-    remove_borrowed_ownership(f);
-    // remove_ownership(foo);
-    println!("{} (mutable reference [f] after remove ownership)", f.x);
-    remove_borrowed_ownership(f);
-    println!("{} (mutable [foo] after remove ownership)", foo.x);
-    let f = &mut foo;
-    println!("{}", f.x);
+//     let f = &mut foo;
+//     println!("{} (mutable reference [f] before remove ownership)", f.x);
+//     remove_borrowed_ownership(f);
+//     // remove_ownership(foo);
+//     println!("{} (mutable reference [f] after remove ownership)", f.x);
+//     remove_borrowed_ownership(f);
+//     println!("{} (mutable [foo] after remove ownership)", foo.x);
+//     let f = &mut foo;
+//     println!("{}", f.x);
+//     // foo is dropped here
+// }
+
+    // References Of References
+    let mut foo = Foo { x: 42 };
+    let x = &mut foo.x;
+    *x = 13;
+    // x is dropped here allow us to create a non-mutable reference
+    let y = return_reference_ownership(&foo);
+    println!("{}", y);
+    // y is dropped here
     // foo is dropped here
 }
