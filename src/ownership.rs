@@ -11,6 +11,11 @@ fn remove_ownership(f: Foo) {
     // f is dropped here
 }
 
+fn return_ownership() -> Foo {
+    Foo { x: 42 }
+    // ownership is moved out
+}
+
 pub fn main() {
 //     // We instantiate structs and bind to variables
 //     // to create memory resources
@@ -31,11 +36,18 @@ pub fn main() {
 //     // then bar.foo is dropped
 // }
 
-    // Remove ownership
-    let foo = Foo { x: 42 };
-    // foo is moved to do_something
+//     // Remove ownership
+//     let foo = Foo { x: 42 };
+//     // foo is moved to do_something
+//     println!("{}", foo.x);
+//     remove_ownership(foo);
+//     // foo can no longer be used
+//     // println!("{}", foo.x);
+// }
+
+    // Return ownership
+    let foo = return_ownership();
+    // foo becomes the owner
     println!("{}", foo.x);
-    remove_ownership(foo);
-    // foo can no longer be used
-    // println!("{}", foo.x);
+    // foo is dropped because of end of function scope
 }
