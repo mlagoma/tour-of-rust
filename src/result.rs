@@ -23,20 +23,20 @@ pub fn main() -> Result<(), String> {
     //     }
     // }
 
-    // // Graceful handling
-    // let v = do_something_that_might_fail(12)?;
-    // // let v = do_something_that_might_fail(42)?;
+    // // Ugly Option/Result Handling
+    // // concise but assumptive and gets ugly fast
+    // let v = do_something_that_might_fail(42).unwrap();
+    // println!("found {}", v);
+    
+    // // this will panic!
+    // let v = do_something_that_might_fail(1).unwrap();
     // println!("found {}", v);
 
-    // Ugly Option/Result Handling
-    // concise but assumptive and gets ugly fast
-    let v = do_something_that_might_fail(42).unwrap();
+    // Graceful handling
+    let mut v = do_something_that_might_fail(42)?;
     println!("found {}", v);
-    
-    // this will panic!
-    let v = do_something_that_might_fail(1).unwrap();
+    v = do_something_that_might_fail(12)?;
     println!("found {}", v);
-
 
     // Notice we use a unit value inside a Result Ok
     // to represent everything is fine
