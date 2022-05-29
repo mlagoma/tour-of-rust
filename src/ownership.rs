@@ -6,6 +6,11 @@ struct Bar {
     foo: Foo,
 }
 
+fn remove_ownership(f: Foo) {
+    println!("{}", f.x);
+    // f is dropped here
+}
+
 pub fn main() {
 //     // We instantiate structs and bind to variables
 //     // to create memory resources
@@ -19,9 +24,18 @@ pub fn main() {
 //     // foo_b is dropped here 
 //     // foo_a is dropped here
 // }
-    // Heirarchical ownership
-    let bar = Bar { foo: Foo { x: 42 } };
-    println!("{}", bar.foo.x);
-    // bar is dropped first
-    // then bar.foo is dropped
+//     // Heirarchical ownership
+//     let bar = Bar { foo: Foo { x: 42 } };
+//     println!("{}", bar.foo.x);
+//     // bar is dropped first
+//     // then bar.foo is dropped
+// }
+
+    // Remove ownership
+    let foo = Foo { x: 42 };
+    // foo is moved to do_something
+    println!("{}", foo.x);
+    remove_ownership(foo);
+    // foo can no longer be used
+    // println!("{}", foo.x);
 }
