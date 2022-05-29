@@ -45,9 +45,17 @@ pub fn main() {
 //     // println!("{}", foo.x);
 // }
 
-    // Return ownership
-    let foo = return_ownership();
-    // foo becomes the owner
-    println!("{}", foo.x);
-    // foo is dropped because of end of function scope
+//     // Return ownership
+//     let foo = return_ownership();
+//     // foo becomes the owner
+//     println!("{}", foo.x);
+//     // foo is dropped because of end of function scope
+// }
+
+    // Borrowing ownership (references)
+    let foo = Foo { x: 42 };
+    let f = &foo;
+    println!("{}", f.x);
+    // f is dropped here
+    // foo is dropped here
 }
