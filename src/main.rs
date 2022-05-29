@@ -2,8 +2,10 @@
 
 mod struct_enums;
 mod option;
+mod result;
 
 fn main() {
 	// struct_enums::main();
-	option::main();
+	// option::main();
+	result::main();
 }
