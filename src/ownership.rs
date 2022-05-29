@@ -11,6 +11,15 @@ fn remove_ownership(f: Foo) {
     // f is dropped here
 }
 
+
+fn remove_mutable_ownership(mut f: Foo) {
+    //let y = f.x;
+    println!("{}", f.x);
+    f.x = 0;
+    println!("{}", f.x);
+    // f is dropped here
+}
+
 fn return_ownership() -> Foo {
     Foo { x: 42 }
     // ownership is moved out
@@ -52,10 +61,43 @@ pub fn main() {
 //     // foo is dropped because of end of function scope
 // }
 
-    // Borrowing ownership (references)
-    let foo = Foo { x: 42 };
-    let f = &foo;
+//     // Borrowing ownership (references)
+//     let foo = Foo { x: 42 };
+//     let f = &foo;
+//     println!("{}", f.x);
+//     // f is dropped here
+//     // foo is dropped here
+// }
+
+    // Borrowing Mutable Ownership with References
+    let mut foo = Foo { x: 42 };
+    let f = &mut foo;
+
+    // FAILURE: remove_ownership(foo) would fail because
+    // foo cannot be moved while mutably borrowed
+    // remove_ownership(foo);
+    // println!("{}", f.x);
+    // println!("{}", foo.x);
+
+    // FAILURE: foo.x = 13; would fail here because
+    // foo is not modifiable while mutably borrowed
+    // foo.x = 13;
+    // println!("{}", foo.x);
+    // println!("{}", f.x);
+
+    f.x = 13;
+    // f is dropped here because it's no longer used after this point
     println!("{}", f.x);
-    // f is dropped here
-    // foo is dropped here
+
+    println!("{}", foo.x);
+
+    // this works now because all mutable references were dropped
+    foo.x = 7;
+    println!("{}", foo.x);
+    // println!("{}", f.x);
+
+    // move foo's ownership to a function
+    remove_ownership(foo);
+    // remove_mutable_ownership(foo);
+    // println!("{}", foo.x);
 }
