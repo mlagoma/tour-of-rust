@@ -4,6 +4,25 @@ fn say_it_loud(msg:&str){
     println!("{}!!!",msg.to_string().to_uppercase());
 }
 
+fn parse_int(int: i32) -> Result<(), std::num::ParseIntError> {
+    // let a = 42;
+    // let a = "not a number";
+    let a_string = int.to_string();
+    let b = a_string.parse::<i32>()?;
+    println!("{} {}", a_string, b);
+    Ok(())
+}
+
+fn parse_int_from_string(str:&str) -> Result<(), std::num::ParseIntError> {
+    // let a = 42;
+    // let a = "not a number";
+    let a_string = str.to_string();
+    let b = a_string.parse::<i32>()?;
+    println!("{} {}", a_string, b);
+    Ok(())
+}
+
+
 pub fn main() {
     let a: &'static str = "hi 🦀";
     println!("{} {}\n", a, a.len());
@@ -62,5 +81,16 @@ pub fn main() {
     let helloworld = ["hello", " ", "world", "!"].concat();
     let abc = ["a", "b", "c"].join(",");
     println!("{}", helloworld);
-    println!("{}",abc);
+    println!("{}\n",abc);
+
+    let a = 42;
+    let f = format!("secret to life: {}",a);
+    println!("{}\n",f);
+
+    let res = parse_int(42);
+    println!("{:?}",res);
+    let res = parse_int_from_string("42");
+    println!("{:?}",res);
+    let res = parse_int_from_string("NaN");
+    println!("{:?}",res);
 }
