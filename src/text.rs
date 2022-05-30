@@ -42,5 +42,11 @@ pub fn main() {
     println!("{}", chars.len()); // should be 4
     // since chars are 4 bytes we can convert to u32
     println!("{}", chars[3] as u32);
-    println!("{}", chars[3]);
+    println!("{}\n", chars[3]);
+
+    let mut helloworld = String::from("hello");
+    helloworld.push_str(" world");
+    helloworld = helloworld + "!";
+    helloworld = helloworld.replace("world", "rust");
+    println!("{}\n", helloworld);
 }
