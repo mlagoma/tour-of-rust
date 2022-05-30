@@ -36,6 +36,14 @@ fn return_shared_lifetime_ownership<'a>(foo: &'a Foo) -> &'a i32 {
     &foo.x
 }
 
+// foo_b and the return value share the same lifetime
+// foo_a has an unrelated lifetime
+fn return_multiple_lifetime_ownership<'a, 'b>(foo_a: &'a Foo, foo_b: &'b Foo) -> &'b i32 {
+    println!("{}", foo_a.x);
+    println!("{}", foo_b.x);
+    return &foo_b.x;
+}
+
 fn return_ownership() -> Foo {
     Foo { x: 42 }
     // ownership is moved out
@@ -148,16 +156,26 @@ pub fn main() {
 //     // foo is dropped here
 // }
 
-    let mut foo = Foo { x: 42 };
-    let x = &mut foo.x;
-    *x = 13;
-    // x is dropped here allow us to create a non-mutable reference
-    // Explicit Lifetimes
-    let y = return_shared_lifetime_ownership(&foo);
-    println!("{}", y);
-    // References Of References
-    let y = return_reference_ownership(&foo);
-    println!("{}", y);
-    // y is dropped here
-    // foo is dropped here
+//     let mut foo = Foo { x: 42 };
+//     let x = &mut foo.x;
+//     *x = 13;
+//     // x is dropped here allow us to create a non-mutable reference
+//     // Explicit Lifetimes
+//     let y = return_shared_lifetime_ownership(&foo);
+//     println!("{}", y);
+//     // References Of References
+//     let y = return_reference_ownership(&foo);
+//     println!("{}", y);
+//     // y is dropped here
+//     // foo is dropped here
+// }
+
+    // Multiple Lifetimes
+    let foo_a = Foo { x: 42 };
+    let foo_b = Foo { x: 12 };
+    let x = return_multiple_lifetime_ownership(&foo_a, &foo_b);
+    // foo_a is dropped here because only foo_b's lifetime exist beyond here
+    println!("{}", x);
+    // x is dropped here
+    // foo_b is dropped here
 }
