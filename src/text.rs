@@ -14,5 +14,12 @@ pub fn main() {
     
     
     println!("hello \
-    world") // notice that the spacing before w is ignored
+    world"); // notice that the spacing before w is ignored
+
+    let a: &'static str = r#"
+        <div class="advice">
+            Raw strings are useful for some situations.
+        </div>
+        "#;
+    println!("{}", a);
 }
