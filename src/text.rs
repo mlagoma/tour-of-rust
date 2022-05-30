@@ -26,4 +26,14 @@ pub fn main() {
 
     let hello_html = include_str!("hello.html");
     println!("{}\n", hello_html);
+
+    let a = "hi 🦀";
+    let first_word = &a[0..2];
+    let second_word = &a[3..7];
+    // let half_crab = &a[3..5]; // FAILS
+    // Rust does not accept slices of invalid unicode characters
+    println!("{} {}", first_word, second_word);
+    println!("length: {}", a.len());
+    println!("find Option<usize> of ' ': {:?}", a.find(" "));
+    println!("find Option<usize> of 'not exists': {:?}", a.find("not exists"));
 }
