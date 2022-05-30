@@ -35,5 +35,12 @@ pub fn main() {
     println!("{} {}", first_word, second_word);
     println!("length: {}", a.len());
     println!("find Option<usize> of ' ': {:?}", a.find(" "));
-    println!("find Option<usize> of 'not exists': {:?}", a.find("not exists"));
+    println!("find Option<usize> of 'not exists': {:?}\n", a.find("not exists"));
+
+    // collect the characters as a vector of char
+    let chars = "hi 🦀".chars().collect::<Vec<char>>();
+    println!("{}", chars.len()); // should be 4
+    // since chars are 4 bytes we can convert to u32
+    println!("{}", chars[3] as u32);
+    println!("{}", chars[3]);
 }
