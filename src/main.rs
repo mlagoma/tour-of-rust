@@ -6,6 +6,7 @@ mod basic_result;
 mod result;
 mod vectors;
 mod ownership;
+mod static_variables;
 
 // fn main() {
 // 	// struct_enums::main();
@@ -18,6 +19,7 @@ fn main() -> Result<(), String> {
 	// return result::main();
 	// result::main()
 	// vectors::main();
-	ownership::main();
+	// ownership::main();
+	static_variables::main();
 	Ok(())
 }
