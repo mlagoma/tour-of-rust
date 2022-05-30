@@ -31,6 +31,11 @@ fn return_reference_ownership(a: &Foo) -> &i32 {
     &a.x
 }
 
+// the parameter foo and return value share the same lifetime
+fn return_shared_lifetime_ownership<'a>(foo: &'a Foo) -> &'a i32 {
+    &foo.x
+}
+
 fn return_ownership() -> Foo {
     Foo { x: 42 }
     // ownership is moved out
@@ -143,11 +148,14 @@ pub fn main() {
 //     // foo is dropped here
 // }
 
-    // References Of References
     let mut foo = Foo { x: 42 };
     let x = &mut foo.x;
     *x = 13;
     // x is dropped here allow us to create a non-mutable reference
+    // Explicit Lifetimes
+    let y = return_shared_lifetime_ownership(&foo);
+    println!("{}", y);
+    // References Of References
     let y = return_reference_ownership(&foo);
     println!("{}", y);
     // y is dropped here
