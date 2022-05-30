@@ -58,4 +58,9 @@ pub fn main() {
     say_it_loud("hello");
     // say_it_loud can also borrow String as a &str
     say_it_loud(&String::from("goodbye"));
+
+    let helloworld = ["hello", " ", "world", "!"].concat();
+    let abc = ["a", "b", "c"].join(",");
+    println!("{}", helloworld);
+    println!("{}",abc);
 }
