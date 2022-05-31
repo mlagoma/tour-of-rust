@@ -11,8 +11,10 @@ impl SeaCreature {
 
 pub trait NoiseMaker {
     fn make_noise(&self);
-    
-    fn make_alot_of_noise(&self){
+}
+
+trait LoudNoiseMaker: NoiseMaker {
+    fn make_alot_of_noise(&self) {
         self.make_noise();
         self.make_noise();
         self.make_noise();
@@ -24,6 +26,8 @@ impl NoiseMaker for SeaCreature {
         println!("{}", &self.get_sound());
     }
 }
+
+impl LoudNoiseMaker for SeaCreature {}
 
 pub fn main() -> SeaCreature {
     let creature = SeaCreature {
