@@ -47,6 +47,16 @@ fn print_type_of<T>(_: &T) {
     print!("{}", std::any::type_name::<T>())
 }
 
+fn generic_make_noise<T>(creature: &T)
+where
+    T: NoiseMaker,
+{
+    // we know the real type at compile-time
+    print_type_of(&creature);
+    print!(" goes ");
+    creature.make_noise();
+}
+
 pub fn main() -> SeaCreature {
     let creature = SeaCreature {
         name: String::from("Ferris"),
@@ -57,5 +67,6 @@ pub fn main() -> SeaCreature {
     creature.make_alot_of_noise();
     static_make_noise(&creature);
     dynamic_make_noise(&creature);
+    generic_make_noise(&creature);
     creature
 }
