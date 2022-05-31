@@ -1,3 +1,5 @@
+use core::fmt::Display;
+use std::error::Error;
 use std::ops::Deref;
 use std::alloc::{alloc, Layout};
 
@@ -60,6 +62,24 @@ impl HeapPie {
     }
 }
 
+struct FailablePie;
+
+#[derive(Debug)]
+struct NotFreshError;
+
+impl Display for NotFreshError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "This pie is not fresh!")
+    }
+}
+
+impl Error for NotFreshError {}
+
+impl FailablePie {
+    pub fn eat(&self) -> Result<(), Box<dyn Error>> {
+        Err(Box::new(NotFreshError))
+    }
+}
 
 pub fn main() {
     let a = 42;
@@ -118,4 +138,15 @@ pub fn main() {
 
     let heap_pie = Box::new(HeapPie);
     heap_pie.eat();
+}
+
+
+pub fn failable_main() -> Result<(), Box<dyn Error>> {
+// pub fn failable_main() -> Box<dyn Error> {
+    let heap_pie = Box::new(FailablePie);
+    // heap_pie
+    // Box::new(FailablePie)
+    heap_pie.eat()?;
+    Ok(())
+    // heap_pie.eat()
 }
