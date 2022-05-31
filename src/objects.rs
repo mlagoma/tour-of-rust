@@ -1,16 +1,20 @@
-struct SeaCreature {
+pub struct SeaCreature {
+    pub name: String,
     noise: String,
 }
 
 impl SeaCreature {
-    fn get_sound(&self) -> &str {
+    pub fn get_sound(&self) -> &str {
         &self.noise
     }
 }
 
-pub fn main() {
+pub fn main() -> SeaCreature {
     let creature = SeaCreature {
+        name: String::from("Ferris"),
         noise: String::from("blub"),
     };
-    println!("{}", creature.get_sound());
+    println!("{} goes {}", creature.name, creature.get_sound());
+    println!("{} goes {}", creature.name, creature.noise);
+    creature
 }

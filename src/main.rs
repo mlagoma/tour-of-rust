@@ -26,6 +26,8 @@ fn main() -> Result<(), String> {
 	// static_variables::main();
 	// struct_lifetimes::main();
 	// text::main();
-	objects::main();
+	let creature = objects::main();
+	// println!("{} goes {}", creature.name, creature.noise);
+	println!("{} goes {}", creature.name, creature.get_sound());
 	Ok(())
 }
