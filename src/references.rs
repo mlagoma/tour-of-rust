@@ -3,6 +3,7 @@ use std::error::Error;
 use std::ops::Deref;
 use std::alloc::{alloc, Layout};
 use std::rc::Rc;
+use std::cell::RefCell;
 
 struct Foo {
     value: i32
@@ -82,6 +83,17 @@ impl FailablePie {
     }
 }
 
+struct SlicedPie {
+    slices: u8
+}
+
+impl SlicedPie {
+    fn eat(&mut self) {
+        println!("tastes better on the heap!");
+        self.slices -= 1;
+    }
+}
+
 pub fn main() {
     let a = 42;
     let memory_location = &a as *const i32 as usize;
@@ -147,6 +159,26 @@ pub fn main() {
     heap_pie3.eat();
     heap_pie2.eat();
     heap_pie.eat();
+
+    // RefCell validates memory safety at runtime
+    // notice: pie_cell is not mut!
+    let pie_cell = RefCell::new(SlicedPie{slices:8});
+    
+    {
+        // but we can borrow mutable references!
+        let mut mut_ref_pie = pie_cell.borrow_mut();
+        mut_ref_pie.eat();
+        mut_ref_pie.eat();
+        // let mut mut_ref_pie_panic = pie_cell.borrow_mut();
+        
+        // mut_ref_pie is dropped at end of scope
+    }
+    
+    // now we can borrow immutably once our mutable reference drops
+     let ref_pie = pie_cell.borrow();
+     println!("{} slices left",ref_pie.slices);
+     let another_ref_pie = pie_cell.borrow();
+     println!("{} slices left",another_ref_pie.slices);
 }
 
 // // Doesn't report result inside a module
