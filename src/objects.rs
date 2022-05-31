@@ -11,6 +11,12 @@ impl SeaCreature {
 
 pub trait NoiseMaker {
     fn make_noise(&self);
+    
+    fn make_alot_of_noise(&self){
+        self.make_noise();
+        self.make_noise();
+        self.make_noise();
+    }
 }
 
 impl NoiseMaker for SeaCreature {
@@ -27,5 +33,6 @@ pub fn main() -> SeaCreature {
     println!("{} goes {}", creature.name, creature.get_sound());
     print!("{} goes ", creature.name);
     creature.make_noise();
+    creature.make_alot_of_noise();
     creature
 }

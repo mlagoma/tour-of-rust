@@ -33,5 +33,6 @@ fn main() -> Result<(), String> {
 	println!("{} goes {}", creature.name, creature.get_sound());
 	print!("{} goes ", creature.name);
 	creature.make_noise();
+    creature.make_alot_of_noise();
 	Ok(())
 }
