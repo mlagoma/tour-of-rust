@@ -52,6 +52,15 @@ impl Deref for Pie {
     }
 }
 
+struct HeapPie;
+
+impl HeapPie {
+    fn eat(&self) {
+        println!("tastes better on the heap!")
+    }
+}
+
+
 pub fn main() {
     let a = 42;
     let memory_location = &a as *const i32 as usize;
@@ -106,4 +115,7 @@ pub fn main() {
     // "make a pie" by dereferencing our 
     // Pie struct smart pointer
     println!("{:?}", *p);
+
+    let heap_pie = Box::new(HeapPie);
+    heap_pie.eat();
 }
