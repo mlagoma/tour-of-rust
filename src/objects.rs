@@ -29,6 +29,24 @@ impl NoiseMaker for SeaCreature {
 
 impl LoudNoiseMaker for SeaCreature {}
 
+fn static_make_noise(creature: &SeaCreature) {
+    // we know the real type
+    print_type_of(&creature);
+    print!(" goes ");
+    creature.make_noise();
+}
+
+fn dynamic_make_noise(noise_maker: &dyn NoiseMaker) {
+    // we don't know the real type
+    print_type_of(&noise_maker);
+    print!(" goes ");
+    noise_maker.make_noise();
+}
+
+fn print_type_of<T>(_: &T) {
+    print!("{}", std::any::type_name::<T>())
+}
+
 pub fn main() -> SeaCreature {
     let creature = SeaCreature {
         name: String::from("Ferris"),
@@ -36,7 +54,8 @@ pub fn main() -> SeaCreature {
     };
     println!("{} goes {}", creature.name, creature.get_sound());
     print!("{} goes ", creature.name);
-    creature.make_noise();
     creature.make_alot_of_noise();
+    static_make_noise(&creature);
+    dynamic_make_noise(&creature);
     creature
 }
