@@ -47,9 +47,17 @@ fn print_type_of<T>(_: &T) {
     print!("{}", std::any::type_name::<T>())
 }
 
-fn generic_make_noise<T>(creature: &T)
-where
-    T: NoiseMaker,
+// fn generic_make_noise<T>(creature: &T)
+// where
+//     T: NoiseMaker,
+// {
+//     // we know the real type at compile-time
+//     print_type_of(&creature);
+//     print!(" goes ");
+//     creature.make_noise();
+// }
+
+fn generic_make_noise(creature: &impl NoiseMaker)
 {
     // we know the real type at compile-time
     print_type_of(&creature);
