@@ -11,6 +11,8 @@ mod struct_lifetimes;
 mod text;
 mod objects;
 
+use crate::objects::NoiseMaker;
+
 // fn main() {
 // 	// struct_enums::main();
 // 	// option::main();
@@ -29,5 +31,7 @@ fn main() -> Result<(), String> {
 	let creature = objects::main();
 	// println!("{} goes {}", creature.name, creature.noise);
 	println!("{} goes {}", creature.name, creature.get_sound());
+	print!("{} goes ", creature.name);
+	creature.make_noise();
 	Ok(())
 }
