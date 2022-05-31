@@ -9,6 +9,7 @@ mod ownership;
 mod static_variables;
 mod struct_lifetimes;
 mod text;
+mod objects;
 
 // fn main() {
 // 	// struct_enums::main();
@@ -24,6 +25,7 @@ fn main() -> Result<(), String> {
 	// ownership::main();
 	// static_variables::main();
 	// struct_lifetimes::main();
-	text::main();
+	// text::main();
+	objects::main();
 	Ok(())
 }
