@@ -2,6 +2,7 @@ use core::fmt::Display;
 use std::error::Error;
 use std::ops::Deref;
 use std::alloc::{alloc, Layout};
+use std::rc::Rc;
 
 struct Foo {
     value: i32
@@ -138,15 +139,23 @@ pub fn main() {
 
     let heap_pie = Box::new(HeapPie);
     heap_pie.eat();
+
+    let heap_pie = Rc::new(HeapPie);
+    let heap_pie2 = heap_pie.clone();
+    let heap_pie3 = heap_pie2.clone();
+
+    heap_pie3.eat();
+    heap_pie2.eat();
+    heap_pie.eat();
 }
 
-
-pub fn failable_main() -> Result<(), Box<dyn Error>> {
-// pub fn failable_main() -> Box<dyn Error> {
-    let heap_pie = Box::new(FailablePie);
-    // heap_pie
-    // Box::new(FailablePie)
-    heap_pie.eat()?;
-    Ok(())
-    // heap_pie.eat()
-}
+// // Doesn't report result inside a module
+// pub fn failable_main() -> Result<(), Box<dyn Error>> {
+// // pub fn failable_main() -> Box<dyn Error> {
+//     let heap_pie = Box::new(FailablePie);
+//     // heap_pie
+//     // Box::new(FailablePie)
+//     heap_pie.eat()?;
+//     Ok(())
+//     // heap_pie.eat()
+// }

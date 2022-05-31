@@ -43,25 +43,26 @@ impl FailablePie {
     }
 }
 
-// fn main() -> Result<(), String> {
-//     // return result::main();
-//     // result::main()
-//     // vectors::main();
-//     // ownership::main();
-//     // static_variables::main();
-//     // struct_lifetimes::main();
-//     // text::main();
-//     // let creature = objects::main();
-//     // // println!("{} goes {}", creature.name, creature.noise);
-//     // println!("{} goes {}", creature.name, creature.get_sound());
-//     // print!("{} goes ", creature.name);
-//     // creature.make_noise();
-//     // // creature.make_alot_of_noise();
-//     references::main();
-//     references::failable_main();
-//     Ok(())
-// }
+fn main() -> Result<(), String> {
+    // return result::main();
+    // result::main()
+    // vectors::main();
+    // ownership::main();
+    // static_variables::main();
+    // struct_lifetimes::main();
+    // text::main();
+    // let creature = objects::main();
+    // // println!("{} goes {}", creature.name, creature.noise);
+    // println!("{} goes {}", creature.name, creature.get_sound());
+    // print!("{} goes ", creature.name);
+    // creature.make_noise();
+    // // creature.make_alot_of_noise();
+    references::main();
+    // references::failable_main();
+    Ok(())
+}
 
+// // Doesn't report result
 // fn failable_dereference() -> Result<(), Box<dyn Error>> {
 //     // references::failable_main()
 //     references::failable_main()?;
@@ -73,8 +74,10 @@ impl FailablePie {
 //     // heap_pie.eat()?;
 //     // Ok(())
 // }
-fn main() -> Result<(), Box<dyn Error>> {
-    let heap_pie = Box::new(FailablePie);
-    heap_pie.eat()?;
-    Ok(())
-}
+
+// // Result works
+// fn main() -> Result<(), Box<dyn Error>> {
+//     let heap_pie = Box::new(FailablePie);
+//     heap_pie.eat()?;
+//     Ok(())
+// }
