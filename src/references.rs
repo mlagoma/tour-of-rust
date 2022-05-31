@@ -1,3 +1,6 @@
+struct Foo {
+    value: i32
+}
 
 fn print_type_of<T>(_: &T) {
     println!("{}", std::any::type_name::<T>())
@@ -17,4 +20,8 @@ pub fn main() {
     println!("{}", b);
     // print_type_of(&ref_ref_ref_a);
     // print_type_of(&ref_a);
+
+    let f = Foo { value: 42 };
+    let ref_ref_ref_f = &&&f;
+    println!("{}", ref_ref_ref_f.value);
 }
