@@ -4,6 +4,7 @@ use std::ops::Deref;
 use std::alloc::{alloc, Layout};
 use std::rc::Rc;
 use std::cell::RefCell;
+use std::sync::Mutex;
 
 struct Foo {
     value: i32
@@ -61,6 +62,14 @@ struct HeapPie;
 impl HeapPie {
     fn eat(&self) {
         println!("tastes better on the heap!")
+    }
+}
+
+struct MutexHeapPie;
+
+impl MutexHeapPie {
+    fn eat(&self) {
+        println!("only I eat the pie right now!")
     }
 }
 
@@ -175,10 +184,27 @@ pub fn main() {
     }
     
     // now we can borrow immutably once our mutable reference drops
-     let ref_pie = pie_cell.borrow();
-     println!("{} slices left",ref_pie.slices);
-     let another_ref_pie = pie_cell.borrow();
-     println!("{} slices left",another_ref_pie.slices);
+    let ref_pie = pie_cell.borrow();
+    println!("{} slices left",ref_pie.slices);
+    let another_ref_pie = pie_cell.borrow();
+    println!("{} slices left",another_ref_pie.slices);
+
+    // let mutex_pie = Mutex::new(MutexHeapPie);
+    mutex_eat_pie();
+    mutex_eat_pie();
+}
+
+fn mutex_eat_pie() {    
+    let mutex_pie = Mutex::new(MutexHeapPie);
+    // let's borrow a locked immutable reference of pie
+    // we have to unwrap the result of a lock
+    // because it might fail
+    let ref_pie = mutex_pie.lock().unwrap();
+    ref_pie.eat();
+    println!("Ate threaded pie");
+    // locked reference drops here, and mutex protected value can be used by someone else
+    // let another_ref_pie = mutex_pie.lock().unwrap();
+    // another_ref_pie.eat();
 }
 
 // // Doesn't report result inside a module
