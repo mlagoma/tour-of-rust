@@ -101,6 +101,25 @@ impl SlicedPie {
         println!("tastes better on the heap!");
         self.slices -= 1;
     }
+
+    fn eat_slice(&mut self, name: &str) {
+        println!("{} took a slice!", name);
+        self.slices -= 1;
+    }
+}
+
+struct SeaCreature {
+    name: String,
+    pie: Rc<RefCell<SlicedPie>>,
+}
+
+impl SeaCreature {
+    fn eat(&self) {
+        // use smart pointer to pie for a mutable borrow
+        let mut p = self.pie.borrow_mut();
+        // take a bite!
+        p.eat_slice(&self.name);
+    }
 }
 
 pub fn main() {
@@ -192,6 +211,22 @@ pub fn main() {
     // let mutex_pie = Mutex::new(MutexHeapPie);
     mutex_eat_pie();
     mutex_eat_pie();
+
+    let pie = Rc::new(RefCell::new(SlicedPie { slices: 8 }));
+    // ferris and sarah are given clones of smart pointer to pie
+    let ferris = SeaCreature {
+        name: String::from("ferris"),
+        pie: pie.clone(),
+    };
+    let sarah = SeaCreature {
+        name: String::from("sarah"),
+        pie: pie.clone(),
+    };
+    ferris.eat();
+    sarah.eat();
+
+    let p = pie.borrow();
+    println!("{} slices left", p.slices);
 }
 
 fn mutex_eat_pie() {    
