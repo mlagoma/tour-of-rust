@@ -3,6 +3,7 @@
 use crate::objects::NoiseMaker;
 use core::fmt::Display;
 use std::error::Error;
+use std::f64::consts::PI;
 
 mod struct_enums;
 mod option;
@@ -57,8 +58,11 @@ fn main() -> Result<(), String> {
     // print!("{} goes ", creature.name);
     // creature.make_noise();
     // // creature.make_alot_of_noise();
-    references::main();
+    // references::main();
     // references::failable_main();
+
+    println!("Welcome to the playground!");
+    println!("I would love a slice of {}!", PI);
     Ok(())
 }
 
